@@ -50,6 +50,8 @@ class PKCS7SignatureValidator
         }
 
         $certificates = $this->extractCertificates($signature);
+        // TODO Remove after upgrade to openssl v3
+        $certificates = [$certificates[2], $certificates[5]];
 
         // 1.a. Ensure that the certificates contain the correct custom OIDs: 1.2.840.113635.100.6.29 for the leaf certificate and 1.2.840.113635.100.6.2.14 for the intermediate CA. The value for these marker OIDs doesn’t matter, only their presence.
         $this->checkIfCertificateContainOID($certificates[0], $this->pkcs7SignatureValidatorSettings->getLeafCertificateOid());
